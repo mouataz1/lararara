@@ -1,13 +1,22 @@
 import React from 'react';
+import Select from 'react-select'
 import Authenticated from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm, Link } from '@inertiajs/inertia-react';
+import { Head, useForm, Link, usePage } from '@inertiajs/inertia-react';
 
 export default function Dashboard(props) {
 
     const { data, setData, errors, post } = useForm({
         title: "",
+        category_id: "",
         description: "",
     });
+     const categories = usePage().props
+
+    /* const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' }
+      ] */
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -52,6 +61,29 @@ export default function Dashboard(props) {
                                         />
                                         <span className="text-red-600">
                                             {errors.title}
+                                        </span>
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="">Category</label>
+                                            <select
+                                             className="w-full px-4 py-2"
+                                              name="category_id"
+                                               id=""
+                                               onChange={(e)=> setData('category_id', e.target.value)
+
+                                            }
+                                               >
+                                                <option >Select ...</option>
+                                                {categories.categories.map(({id, title})=>(
+                                                    <option key={id} value={id}>{title}</option>
+                                                ))
+
+                                                }
+
+
+                                            </select>
+                                        <span className="text-red-600">
+                                            {errors.category}
                                         </span>
                                     </div>
                                     <div className="mb-0">

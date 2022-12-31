@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Show the form for creating a new resource.
@@ -17,9 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
         $categories = Category::all();
-        return Inertia::render('Posts/Index', ['posts' => $posts, 'categories'=>$categories]);
+        return Inertia::render('Categories/Index', ['categories' => $categories]);
     }
 
     /**
@@ -29,8 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-       $categories =  Category::all();
-        return Inertia::render('Posts/Create', ['categories'=>$categories]);
+        return Inertia::render('Categories/Create');
     }
 
     /**
@@ -42,12 +39,11 @@ class PostController extends Controller
     {
         Validator::make($request->all(), [
             'title' => ['required'],
-            'body' => ['required'],
         ])->validate();
 
-        Post::create($request->all());
+        Category::create($request->all());
 
-        return redirect()->route('posts.index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -55,12 +51,10 @@ class PostController extends Controller
      *
      * @return response()
      */
-    public function edit(Post $post)
+    public function edit(Category $category)
     {
-        $categories =  Category::all();
-        return Inertia::render('Posts/Edit', [
-            'post' => $post,
-            'categories'=>$categories
+        return Inertia::render('Categories/Edit', [
+            'category' => $category
         ]);
     }
 
@@ -73,11 +67,10 @@ class PostController extends Controller
     {
         Validator::make($request->all(), [
             'title' => ['required'],
-            'body' => ['required'],
         ])->validate();
 
-        Post::find($id)->update($request->all());
-        return redirect()->route('posts.index');
+        Category::find($id)->update($request->all());
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -87,7 +80,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();
-        return redirect()->route('posts.index');
+        Category::find($id)->delete();
+        return redirect()->route('categories.index');
     }
 }

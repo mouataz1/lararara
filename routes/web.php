@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ use App\Http\Controllers\PostController;
 */
 
 Route::resource('posts', PostController::class);
+Route::resource('categories', CategoryController::class);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

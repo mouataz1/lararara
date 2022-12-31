@@ -14,6 +14,10 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'body'
+        'title', 'body', 'category_id'
     ];
+
+    public function Category(){
+        return $this->belongsTo(Category::class);
+    }
 }
